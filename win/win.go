@@ -8,34 +8,26 @@
 package hotkey_win
 
 import (
-	. "github.com/lxn/win"
 	"syscall"
+
+	. "github.com/lxn/win"
 )
 
 var (
-	libuser32   uintptr
-	libkernel32 uintptr
+	// Library
+	libuser32, _   = syscall.LoadLibrary("user32.dll")
+	libkernel32, _ = syscall.LoadLibrary("kernel32.dll")
 
-	registerHotKey    uintptr
-	unregisterHotKey  uintptr
-	postThreadMessage uintptr
+	// Functions
+	registerHotKey, _    = syscall.GetProcAddress(libuser32, "RegisterHotKey")
+	unregisterHotKey, _  = syscall.GetProcAddress(libuser32, "UnregisterHotKey")
+	postThreadMessage, _ = syscall.GetProcAddress(libuser32, "PostThreadMessageW")
 
-	getCurrentThread uintptr
-	getThreadId      uintptr
+	getCurrentThread, _ = syscall.GetProcAddress(libkernel32, "GetCurrentThread")
+	getThreadID, _      = syscall.GetProcAddress(libkernel32, "GetThreadId")
 )
 
 func init() {
-	// Library
-	libuser32 = MustLoadLibrary("user32.dll")
-	libkernel32 = MustLoadLibrary("kernel32.dll")
-
-	// Functions
-	registerHotKey = MustGetProcAddress(libuser32, "RegisterHotKey")
-	unregisterHotKey = MustGetProcAddress(libuser32, "UnregisterHotKey")
-	postThreadMessage = MustGetProcAddress(libuser32, "PostThreadMessageW")
-
-	getCurrentThread = MustGetProcAddress(libkernel32, "GetCurrentThread")
-	getThreadId = MustGetProcAddress(libkernel32, "GetThreadId")
 }
 
 func RegisterHotKey(hwnd HWND, id int32, fsModifiers, vk uint32) bool {
@@ -74,6 +66,6 @@ func GetCurrentThread() HANDLE {
 }
 
 func GetThreadId(thread HANDLE) uint32 {
-	ret, _, _ := syscall.Syscall(getThreadId, 1, uintptr(thread), 0, 0)
+	ret, _, _ := syscall.Syscall(getThreadID, 1, uintptr(thread), 0, 0)
 	return uint32(ret)
 }
