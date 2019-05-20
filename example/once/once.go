@@ -7,7 +7,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/BaaaZen/go-winhotkey"
+	"github.com/baaazen/go-winhotkey"
 )
 
 var hkey = hotkey.New()

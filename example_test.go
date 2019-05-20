@@ -7,7 +7,7 @@ package hotkey_test
 import (
 	"fmt"
 
-	hotkey "github.com/BaaaZen/go-winhotkey"
+	hotkey "github.com/baaazen/go-winhotkey"
 )
 
 func ExampleRegister() {

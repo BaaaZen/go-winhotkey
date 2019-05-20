@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-import "github.com/BaaaZen/go-winhotkey"
+import "github.com/baaazen/go-winhotkey"
 
 type testRegister struct {
 	fsModifiers hotkey.Modifier

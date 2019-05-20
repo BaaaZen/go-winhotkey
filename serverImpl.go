@@ -13,7 +13,7 @@ import (
 	"github.com/lxn/win"
 )
 
-import "github.com/BaaaZen/go-winhotkey/win"
+import "github.com/baaazen/go-winhotkey/win"
 
 const (
 	msgRegister = iota
